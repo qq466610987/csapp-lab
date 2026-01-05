@@ -146,6 +146,7 @@ int bitXor(int x, int y) {
   return ~(~(x & ~y) & ~(~x & y));
 }
 /* 
+ * 返回最小的二进制补码整数
  * tmin - return minimum two's complement integer 
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 4
