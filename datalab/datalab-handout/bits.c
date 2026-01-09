@@ -292,7 +292,33 @@ int logicalNeg(int x)
  */
 int howManyBits(int x)
 {
-  return 0;
+  // 负数统一处理：负数转换为 -x-1（即 ~x），正数保持不变。这样 -1 变成 0，-5 变成 4，统一为正数处理。
+  // 二分查找最高位 1：用二分查找定位最高位 1 的位置。
+  // 加 1：结果加 1（符号位）。
+
+  // 获取符号位（负数全 1，正数全 0）
+  int sign = x >> 31;
+  // 负数取 ~x，正数取 x
+  int n = (sign & (~x)) | (~sign & x);
+  
+  int bit16 = !!(n >> 16) << 4;
+  n = n >> bit16;
+  
+  int bit8 = !!(n >> 8) << 3;
+  n = n >> bit8;
+  
+  int bit4 = !!(n >> 4) << 2;
+  n = n >> bit4;
+  
+  int bit2 = !!(n >> 2) << 1;
+  n = n >> bit2;
+  
+  int bit1 = !!(n >> 1);
+  n = n >> bit1;
+  
+  int bit0 = n;
+  
+  return bit16 + bit8 + bit4 + bit2 + bit1 + bit0 + 1;
 }
 // float
 /*
